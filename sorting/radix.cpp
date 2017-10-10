@@ -3,37 +3,28 @@
 
 using namespace std;
 
-void radix_sort(int* data, int size, int p,int k)
+void radix_sort(int* data, int p, int k)
 {
-	int *counts, *temp; 
-	int index, pval, i, j, n;
-	if ((counts =
-		(int*)malloc(k * sizeof(int))) == NULL)
-		return;
-	if ((temp = (int*)malloc(size * sizeof(int))) == NULL)
-		return;
-	for (n = 0; n < p; n++) {
-		for (i = 0; i < k; i++)
-			counts[i] = 0;
+	int *arr_count, *temp;
+	int size;
 
-		pval = (int)pow((double)k, (double)n);
+	size = sizeof(data) / sizeof(int);
 
-		for (j = 0; j < size; j++) {
-			index = (int)(data[j] / pval) % k;
-			counts[index] = counts[index] + 1;
+	arr_count = (int *)malloc(sizeof(int) * k);
+	temp = (int *)malloc(sizeof(int) * size);
+
+	for (int i = 0; i < p; ++i)
+	{
+		memset(arr_count, 0, sizeof(arr_count));
+
+		int digit = (int)pow(k, i);
+		
+		for (int j = 0; j < size; ++j)
+		{
+			int cur = data[j] / digit;
+
+			arr_count[cur]++;
 		}
-
-		for (i = 1; i < k; i++) {
-			counts[i] = counts[i] + counts[i - 1];
-		}
-
-		for (j = size - 1; j >= 0; j--) {
-			index = (int)(data[j] / pval) % k;
-			temp[counts[index] - 1] = data[j];
-			counts[index] = counts[index] - 1;
-		}
-
-		memcpy(data, temp, size * sizeof(int));
 	}
 }
 
@@ -41,7 +32,11 @@ int main()
 {
 	int arr[6] = { 33, 111, 22, 63, 4, 9 };
 
-	radix_sort(arr, 6, 3, 10);
+	memset(arr, 0, sizeof(arr));
+
+	
+
+	radix_sort(arr, 3, 10);
 
 	for (int i = 0; i < 6; ++i)
 	{
