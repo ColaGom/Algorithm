@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// data, 최대 자리수, 진수
 void radix_sort(int* data, int p, int k)
 {
 	int *arr_count, *temp;
@@ -18,7 +19,7 @@ void radix_sort(int* data, int p, int k)
 		memset(arr_count, 0, sizeof(arr_count));
 
 		int digit = (int)pow(k, i);
-		
+
 		for (int j = 0; j < size; ++j)
 		{
 			int cur = data[j] / digit;
@@ -33,8 +34,6 @@ int main()
 	int arr[6] = { 33, 111, 22, 63, 4, 9 };
 
 	memset(arr, 0, sizeof(arr));
-
-	
 
 	radix_sort(arr, 3, 10);
 
